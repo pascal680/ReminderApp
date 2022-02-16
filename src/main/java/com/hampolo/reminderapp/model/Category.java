@@ -1,20 +1,21 @@
 package com.hampolo.reminderapp.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
+@Document("Categories")
 @Data
 public class Category {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private String id;
 
   private String title;
   private String description;
 
+  public Category(String title, String description) {
+    this.title = title;
+    this.description = description;
+  }
 }

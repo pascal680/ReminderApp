@@ -1,20 +1,21 @@
 package com.hampolo.reminderapp.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
+@Document("RemindersDetails")
 @Data
 public class ReminderDetails {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private String id;
 
   private String description;
   private PriorityLevel priority;
 
+  public ReminderDetails(String description, PriorityLevel priority) {
+    this.description = description;
+    this.priority = priority;
+  }
 }

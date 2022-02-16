@@ -1,19 +1,14 @@
 package com.hampolo.reminderapp.model;
 
 import java.time.LocalDate;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
 import lombok.Data;
 
-@MappedSuperclass
 @Data
 public class Account {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  protected int id;
+  protected String id;
   protected String firstName;
   protected String lastName;
   protected String email;
