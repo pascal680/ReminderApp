@@ -1,1 +1,85 @@
-<p>reminder-details works!</p>
+<div class="form-body">
+  <div class="row">
+    <div class="form-holder">
+      <div class="form-content">
+        <div class="form-items">
+          <h3>Register Today</h3>
+          <p>Fill in the data below.</p>
+          <form class="requires-validation" novalidate>
+
+            <div class="col-md-12">
+              <input class="form-control" type="text" name="reminderTitle" placeholder="Reminder Title"  required>
+              <div class="valid-feedback">Username field is valid!</div>
+              <div class="invalid-feedback">Username field cannot be blank!</div>
+            </div>
+
+            <div class="col-md-12">
+              <input class="form-control" type="date" name="email" placeholder="Reminder Date" required>
+              <div class="valid-feedback">Email field is valid!</div>
+              <div class="invalid-feedback">Email field cannot be blank!</div>
+            </div>
+
+            <div class="col-md-12">
+              <select class="form-select mt-3" required>
+                <option selected disabled value="">Category</option>
+                <option value="clientPayment">Client Payment</option>
+                <option value="clientCall">Client call</option>
+              </select>
+              <div class="valid-feedback">You selected a position!</div>
+              <div class="invalid-feedback">Please select a position!</div>
+            </div>
+
+
+            <div class="col-md-12">
+              <textarea class="form-control" name="reminderDescription" placeholder="Reminder Description" required></textarea>
+              <div class="valid-feedback">Password field is valid!</div>
+              <div class="invalid-feedback">Password field cannot be blank!</div>
+            </div>
+
+
+            <div class="col-md-12 mt-3 urgencyLabels">
+              <label class="mb-3 mr-1" for="urgency">Urgency: </label>
+
+              <input type="radio" class="btn-check" name="urgency" id="normal" autocomplete="off" required>
+              <label class="btn btn-sm btn-outline-secondary" for="normal">Normal</label>
+
+              <input type="radio" class="btn-check" name="urgency" id="urgent" autocomplete="off" required>
+              <label class="btn btn-sm btn-outline-secondary" for="urgent">Urgent</label>
+
+              <input type="radio" class="btn-check" name="urgency" id="critical" autocomplete="off" required>
+              <label class="btn btn-sm btn-outline-secondary" for="critical">Critical</label>
+              <div class="valid-feedback mv-up">You selected a gender!</div>
+              <div class="invalid-feedback mv-up">Please select a gender!</div>
+            </div>
+
+            <div class="col-md-12 mt-3 urgencyLabels">
+              <label class="mb-3 mr-1" for="contactType">Reminded By: </label>
+
+              <input type="radio" class="btn-check" name="urgency" id="phone" autocomplete="off" required>
+              <label class="btn btn-sm btn-outline-secondary" for="phone">Phone</label>
+
+              <input type="radio" class="btn-check" name="urgency" id="email" autocomplete="off" required>
+              <label class="btn btn-sm btn-outline-secondary" for="email">Email</label>
+
+              <input type="radio" class="btn-check" name="urgency" id="both" autocomplete="off" required>
+              <label class="btn btn-sm btn-outline-secondary" for="both">Both</label>
+              <div class="valid-feedback mv-up">You selected a gender!</div>
+              <div class="invalid-feedback mv-up">Please select a gender!</div>
+            </div>
+
+            <!--            <div class="form-check">-->
+            <!--              <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>-->
+            <!--              <label class="form-check-label">I confirm that all data are correct</label>-->
+            <!--              <div class="invalid-feedback">Please confirm that the entered data are all correct!</div>-->
+            <!--            </div>-->
+
+
+            <div class="form-button mt-3">
+              <button id="submit" type="submit" class="btn btn-primary" routerLink="/home">Create Reminder</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
