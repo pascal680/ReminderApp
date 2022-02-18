@@ -9,6 +9,7 @@ import { LoginComponent } from './components/login/login.component';
 import { ReminderListComponent } from './components/reminder/reminder-list/reminder-list.component';
 import { ReminderItemComponent } from './components/reminder/reminder-item/reminder-item.component';
 import { CreateReminderComponent } from './components/reminder/create-reminder/create-reminder.component';
+import { ReminderDetailsComponent } from './components/reminder/reminder-details/reminder-details.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { CreateReminderComponent } from './components/reminder/create-reminder/c
     LoginComponent,
     ReminderListComponent,
     ReminderItemComponent,
-    CreateReminderComponent
+    CreateReminderComponent,
+    ReminderDetailsComponent
   ],
   imports: [
     BrowserModule,
