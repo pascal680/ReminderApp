@@ -1,7 +1,9 @@
 package com.hampolo.reminderapp;
 
+import com.hampolo.reminderapp.model.Admin;
 import com.hampolo.reminderapp.model.Category;
 import com.hampolo.reminderapp.model.User;
+import com.hampolo.reminderapp.repository.AdminRepository;
 import com.hampolo.reminderapp.repository.CategoryRepository;
 import com.hampolo.reminderapp.repository.UserRepository;
 import java.util.Arrays;
@@ -12,11 +14,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class DataInjection implements CommandLineRunner {
   private UserRepository userRepository;
+  private AdminRepository adminRepository;
   private CategoryRepository categoryRepository;
 
   public DataInjection(UserRepository userRepository,
+      AdminRepository adminRepository,
       CategoryRepository categoryRepository) {
     this.userRepository = userRepository;
+    this.adminRepository = adminRepository;
     this.categoryRepository = categoryRepository;
   }
 
@@ -48,5 +53,10 @@ public class DataInjection implements CommandLineRunner {
 
     userRepository.deleteAll();
     userRepository.saveAll(Arrays.asList(user, user2));
+
+    Admin admin = new Admin("Admin", "AdminLN", "admin@email.com", "password", "root" );
+
+    adminRepository.deleteAll();
+    adminRepository.save(admin);
   }
 }

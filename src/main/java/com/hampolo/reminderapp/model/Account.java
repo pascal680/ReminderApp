@@ -1,6 +1,7 @@
 package com.hampolo.reminderapp.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.Id;
 import lombok.Data;
 
@@ -13,10 +14,10 @@ public class Account {
   protected String lastName;
   protected String email;
   protected String password;
-  protected LocalDate dateCreated;
+  protected LocalDateTime dateCreated;
 
   public Account(){
-    this.dateCreated = LocalDate.now();
+    this.dateCreated = LocalDateTime.now();
   }
 
   public Account(String firstName, String lastName, String email, String password) {
@@ -24,6 +25,6 @@ public class Account {
     this.lastName = lastName;
     this.email = email;
     this.password = password;
-    this.dateCreated = LocalDate.now();
+    this.dateCreated = LocalDateTime.now();
   }
 }
