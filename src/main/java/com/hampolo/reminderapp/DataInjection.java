@@ -58,5 +58,12 @@ public class DataInjection implements CommandLineRunner {
 
     adminRepository.deleteAll();
     adminRepository.save(admin);
+
+    User byEmail = userRepository.findByEmail("pascalbourgoindev@gmail.com");
+    User byEmailAndPassword = userRepository
+        .findByEmailAndPasswordIgnoreCase("pascalbourgoindev@gmail.com", "password");
+
+    System.err.println(byEmail);
+    System.err.println(byEmailAndPassword);
   }
 }
