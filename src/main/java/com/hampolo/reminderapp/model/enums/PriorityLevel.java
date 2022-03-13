@@ -1,4 +1,4 @@
-package com.hampolo.reminderapp.model;
+package com.hampolo.reminderapp.model.enums;
 
 public enum PriorityLevel {
   Normal,

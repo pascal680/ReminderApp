@@ -7,7 +7,6 @@ import com.hampolo.reminderapp.repository.AdminRepository;
 import com.hampolo.reminderapp.repository.CategoryRepository;
 import com.hampolo.reminderapp.repository.UserRepository;
 import java.util.Arrays;
-import java.util.List;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -54,12 +53,12 @@ public class DataInjection implements CommandLineRunner {
     userRepository.deleteAll();
     userRepository.saveAll(Arrays.asList(user, user2));
 
-    Admin admin = new Admin("Admin", "AdminLN", "admin@email.com", "password", "root" );
+    Admin admin = new Admin("Admin", "AdminLN", "admin@email.com", "password" );
 
     adminRepository.deleteAll();
     adminRepository.save(admin);
 
-    User byEmail = userRepository.findByEmail("pascalbourgoindev@gmail.com");
+    User byEmail = userRepository.findByEmailIgnoreCase("pascalbourgoindev@gmail.com");
     User byEmailAndPassword = userRepository
         .findByEmailAndPasswordIgnoreCase("pascalbourgoindev@gmail.com", "password");
 

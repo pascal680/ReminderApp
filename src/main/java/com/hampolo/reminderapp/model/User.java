@@ -1,5 +1,6 @@
 package com.hampolo.reminderapp.model;
 
+import com.hampolo.reminderapp.model.enums.Role;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
@@ -15,9 +16,12 @@ public class User extends Account{
   @DBRef
   private List<Category> categories;
 
+  public User() {
+  }
+
   public User(String firstName, String lastName, String email, String password,
       String phoneNumber) {
-    super(firstName, lastName, email, password);
+    super(firstName, lastName, email, password, Role.User);
     this.categories = new ArrayList<>();
     this.phoneNumber = phoneNumber;
   }
