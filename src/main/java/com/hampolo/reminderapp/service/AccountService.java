@@ -1,12 +1,13 @@
 package com.hampolo.reminderapp.service;
 
+import com.hampolo.reminderapp.dto.LoginRequestDto;
+import com.hampolo.reminderapp.exceptions.AccountNotFoundException;
+import com.hampolo.reminderapp.exceptions.WrongCredentialsException;
 import com.hampolo.reminderapp.model.Account;
-import com.hampolo.reminderapp.model.Admin;
 import com.hampolo.reminderapp.model.User;
 import com.hampolo.reminderapp.repository.AdminRepository;
 import com.hampolo.reminderapp.repository.UserRepository;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,16 +28,19 @@ public class AccountService {
 
 
 
-  public Optional<Account> login(String email, String password){
-    if(!userRepository.findByEmailIgnoreCase(email).equals(Optional.empty())){
-      return Optional.of(userRepository.findByEmailAndPasswordIgnoreCase(email, password));
+  public Account login(LoginRequestDto loginRequestDto)
+      throws WrongCredentialsException, AccountNotFoundException {
+    if(userRepository.findByEmailIgnoreCase(loginRequestDto.getEmail()).isPresent()){
+      return userRepository.findByEmailIgnoreCaseAndPassword(loginRequestDto.getEmail(), loginRequestDto.getPassword())
+          .orElseThrow(()->new WrongCredentialsException("Wrong credentials!"));
     }
 
-    if(!adminRepository.findByEmailIgnoreCase(email).equals(Optional.empty())){
-      return Optional.of(adminRepository.findByEmailAndPasswordIgnoreCase(email, password));
+    else if(adminRepository.findByEmailIgnoreCase(loginRequestDto.getEmail()).isPresent()){
+      return adminRepository.findByEmailIgnoreCaseAndPassword(loginRequestDto.getEmail(), loginRequestDto.getPassword())
+          .orElseThrow(()->new WrongCredentialsException("Wrong credentials!"));
     }
 
-    return Optional.empty();
+    throw new AccountNotFoundException("User was not found!");
   }
 
 }

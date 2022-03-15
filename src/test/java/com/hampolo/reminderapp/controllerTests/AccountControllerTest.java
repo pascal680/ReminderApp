@@ -6,8 +6,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hampolo.reminderapp.controller.AccountController;
+import com.hampolo.reminderapp.dto.LoginRequestDto;
+import com.hampolo.reminderapp.exceptions.AccountNotFoundException;
+import com.hampolo.reminderapp.exceptions.WrongCredentialsException;
+import com.hampolo.reminderapp.model.Account;
 import com.hampolo.reminderapp.model.Admin;
 import com.hampolo.reminderapp.model.User;
+import com.hampolo.reminderapp.model.enums.Role;
 import com.hampolo.reminderapp.service.AccountService;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -23,6 +28,7 @@ import org.springframework.boot.test.context.ConfigFileApplicationContextInitial
 
 
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 
 @ContextConfiguration(
@@ -45,7 +51,7 @@ public class AccountControllerTest {
   }
 
   @Test
-  public void getAllUsers() throws Exception {
+  public void testGetAllUsers() throws Exception {
     List<User> expected = getUsers();
     when(accountService.getAllUsers()).thenReturn(expected);
 
@@ -59,6 +65,77 @@ public class AccountControllerTest {
     var actualUsers = mapper.readValue(result.getResponse().getContentAsString(), List.class);
     assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
     assertThat(actualUsers.size()).isEqualTo(expected.size());
+  }
+
+  @Test
+  public void testLoginSuccess()
+      throws Exception {
+    LoginRequestDto loginRequestDto = new LoginRequestDto("test@test.com", "password");
+    //Account expected = getUsers().get(0); why does this return a different object
+    /* Expected :User(phoneNumber=12345, categories=[])
+    Actual   :Account(id=null, firstName=User1, lastName=UserLN1, email=user@test, password=password, dateCreated=2022-03-15T00:48:46.105278500, role=User)
+     */
+    Account expected = new Account("Test", "TestLN", "test@test.com", "password", Role.User);
+
+    when(accountService.login(loginRequestDto)).thenReturn(expected);
+
+    MvcResult result =
+        mockMvc.perform(
+            post("/account/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(loginRequestDto)))
+            .andReturn();
+
+    var actualUser = mapper.readValue(result.getResponse().getContentAsString(), Account.class);
+    assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+    assertThat(actualUser).isEqualTo(expected);
+
+  }
+
+  @Test
+  public void testLoginUnknownError()
+      throws Exception {
+    LoginRequestDto loginRequestDto = new LoginRequestDto("test@test.com", "password");
+    //Account expected = getUsers().get(0); why does this return a different object
+    /* Expected :User(phoneNumber=12345, categories=[])
+    Actual   :Account(id=null, firstName=User1, lastName=UserLN1, email=user@test, password=password, dateCreated=2022-03-15T00:48:46.105278500, role=User)
+     */
+    Account expected = new Account("Test", "TestLN", "test@test.com", "password", Role.User);
+
+    when(accountService.login(loginRequestDto)).thenThrow(AccountNotFoundException.class);
+
+    MvcResult result =
+        mockMvc.perform(
+            post("/account/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(loginRequestDto)))
+            .andReturn();
+
+    assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+
+  }
+
+  @Test
+  public void testLoginWrongCredentialsError()
+      throws Exception {
+    LoginRequestDto loginRequestDto = new LoginRequestDto("test@test.com", "password");
+    //Account expected = getUsers().get(0); why does this return a different object
+    /* Expected :User(phoneNumber=12345, categories=[])
+    Actual   :Account(id=null, firstName=User1, lastName=UserLN1, email=user@test, password=password, dateCreated=2022-03-15T00:48:46.105278500, role=User)
+     */
+    Account expected = new Account("Test", "TestLN", "test@test.com", "password", Role.User);
+
+    when(accountService.login(loginRequestDto)).thenThrow(WrongCredentialsException.class);
+
+    MvcResult result =
+        mockMvc.perform(
+            post("/account/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(loginRequestDto)))
+            .andReturn();
+
+    assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
+
   }
 
 

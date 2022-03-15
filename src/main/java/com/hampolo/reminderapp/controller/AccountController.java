@@ -1,12 +1,17 @@
 package com.hampolo.reminderapp.controller;
 
-import com.hampolo.reminderapp.model.Admin;
+import com.hampolo.reminderapp.dto.LoginRequestDto;
+import com.hampolo.reminderapp.exceptions.AccountNotFoundException;
+import com.hampolo.reminderapp.exceptions.WrongCredentialsException;
+import com.hampolo.reminderapp.model.Account;
 import com.hampolo.reminderapp.model.User;
-import com.hampolo.reminderapp.repository.AdminRepository;
-import com.hampolo.reminderapp.repository.UserRepository;
 import com.hampolo.reminderapp.service.AccountService;
 import java.util.List;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,10 +30,11 @@ public class AccountController {
     return accountService.getAllUsers();
   }
 
-//  @GetMapping("/admins/all")
-//  public List<Admin> getAllAdmins(){
-//    return adminRepository.findAll();
-//  }
+  @PostMapping("/login")
+  public ResponseEntity<Account> login(@RequestBody LoginRequestDto loginRequestDto)
+      throws WrongCredentialsException, AccountNotFoundException {
+    return new ResponseEntity<>(accountService.login(loginRequestDto), HttpStatus.OK);
+  }
 
 
 }
