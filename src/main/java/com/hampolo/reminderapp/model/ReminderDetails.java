@@ -1,16 +1,10 @@
 package com.hampolo.reminderapp.model;
 
 import com.hampolo.reminderapp.model.enums.PriorityLevel;
-import javax.persistence.Id;
 import lombok.Data;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document("RemindersDetails")
 @Data
 public class ReminderDetails {
-
-  @Id
-  private String id;
 
   private String description;
   private PriorityLevel priority;

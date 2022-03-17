@@ -1,8 +1,11 @@
 package com.hampolo.reminderapp.service;
 
 import com.hampolo.reminderapp.dto.LoginRequestDto;
+import com.hampolo.reminderapp.dto.UserRegistrationFormDto;
 import com.hampolo.reminderapp.exceptions.AccountNotFoundException;
+import com.hampolo.reminderapp.exceptions.DuplicateUserException;
 import com.hampolo.reminderapp.exceptions.WrongCredentialsException;
+import com.hampolo.reminderapp.mapping.UserMapper;
 import com.hampolo.reminderapp.model.Account;
 import com.hampolo.reminderapp.model.User;
 import com.hampolo.reminderapp.repository.AdminRepository;
@@ -41,6 +44,21 @@ public class AccountService {
     }
 
     throw new AccountNotFoundException("User was not found!");
+  }
+
+  public User registerUser(UserRegistrationFormDto userDto) throws DuplicateUserException {
+    if(userRepository.findByEmailIgnoreCase(userDto.getEmail()).isPresent()){
+      throw new DuplicateUserException("User already exist");
+    }
+
+    return userRepository.save(UserMapper.toEntity(userDto));
+  }
+
+  public User saveUser(User user) throws AccountNotFoundException {
+    if(userRepository.findById(user.getId()).isEmpty()){
+      throw new AccountNotFoundException("User could not be foud to perform the save. User: " + user);
+    }
+    return userRepository.save(user);
   }
 
 }

@@ -13,8 +13,11 @@ public class User extends Account{
 
   private String phoneNumber;
 
+  private List<Reminder> reminders;
+
   @DBRef
   private List<Category> categories;
+
 
   public User() {
   }
@@ -22,6 +25,7 @@ public class User extends Account{
   public User(String firstName, String lastName, String email, String password,
       String phoneNumber) {
     super(firstName, lastName, email, password, Role.User);
+    this.reminders = new ArrayList<>();
     this.categories = new ArrayList<>();
     this.phoneNumber = phoneNumber;
   }

@@ -1,6 +1,6 @@
 package com.hampolo.reminderapp.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.Id;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -14,19 +14,32 @@ public class Reminder {
   private String id;
 
   private String reminderTitle;
-  private LocalDate reminderDate;
-  private LocalDate reminderCreationDate;
+
+  private LocalDateTime reminderDate;
+
+  private LocalDateTime reminderCreationDate;
 
   private ReminderDetails reminderDetails;
 
   @DBRef
   private Category reminderCategory;
 
+  public Reminder(){
+    this.reminderCreationDate = LocalDateTime.now();
+  }
 
-
-  public Reminder(String reminderTitle, LocalDate reminderDate) {
+  public Reminder(String reminderTitle, LocalDateTime reminderDate) {
     this.reminderTitle = reminderTitle;
     this.reminderDate = reminderDate;
-    this.reminderCreationDate = LocalDate.now();
+    this.reminderCreationDate = LocalDateTime.now();
+  }
+
+  public Reminder(String reminderTitle, LocalDateTime reminderDate,
+      ReminderDetails reminderDetails, Category reminderCategory) {
+    this.reminderTitle = reminderTitle;
+    this.reminderDate = reminderDate;
+    this.reminderDetails = reminderDetails;
+    this.reminderCategory = reminderCategory;
+    this.reminderCreationDate = LocalDateTime.now();
   }
 }

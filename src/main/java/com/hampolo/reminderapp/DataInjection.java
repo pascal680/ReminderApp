@@ -2,11 +2,15 @@ package com.hampolo.reminderapp;
 
 import com.hampolo.reminderapp.model.Admin;
 import com.hampolo.reminderapp.model.Category;
+import com.hampolo.reminderapp.model.Reminder;
 import com.hampolo.reminderapp.model.User;
 import com.hampolo.reminderapp.repository.AdminRepository;
 import com.hampolo.reminderapp.repository.CategoryRepository;
+import com.hampolo.reminderapp.repository.ReminderRepository;
 import com.hampolo.reminderapp.repository.UserRepository;
+import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -16,13 +20,16 @@ public class DataInjection implements CommandLineRunner {
   private UserRepository userRepository;
   private AdminRepository adminRepository;
   private CategoryRepository categoryRepository;
+  private ReminderRepository reminderRepository;
 
   public DataInjection(UserRepository userRepository,
       AdminRepository adminRepository,
-      CategoryRepository categoryRepository) {
+      CategoryRepository categoryRepository,
+      ReminderRepository reminderRepository) {
     this.userRepository = userRepository;
     this.adminRepository = adminRepository;
     this.categoryRepository = categoryRepository;
+    this.reminderRepository = reminderRepository;
   }
 
   @Override
@@ -33,13 +40,19 @@ public class DataInjection implements CommandLineRunner {
     categoryRepository.deleteAll();
     categoryRepository.saveAll(Arrays.asList(categoryPayment, categoryTest));
 
+    Reminder reminder1 = new Reminder("Test reminder1", LocalDateTime.now());
+    Reminder reminder2 = new Reminder("Test reminder2", LocalDateTime.now());
+
+    reminderRepository.deleteAll();
+    reminderRepository.saveAll(List.of(reminder1, reminder2));
+
     User user = new User("Pascal",
         "Bourgoin",
         "pascalbourgoindev@gmail.com",
         "password",
         "5149100627");
 
-
+    user.setReminders(List.of(reminder1));
 
     user.setCategories(Arrays.asList(categoryPayment, categoryTest));
 
@@ -48,6 +61,8 @@ public class DataInjection implements CommandLineRunner {
         "pascalbourgoindev@gmail.com1",
         "password",
         "51491006271");
+
+    user2.setReminders(List.of(reminder1,reminder2));
 
     user2.setCategories(Arrays.asList(categoryPayment, categoryTest));
 
