@@ -1,10 +1,11 @@
 import {Injectable} from "@angular/core";
 import {BaseService} from "./base.service";
-import {Observable} from "rxjs";
+import {map, Observable} from "rxjs";
 import {Reminder} from "../models/entities.model";
 import {HttpClient} from "@angular/common/http";
-import * as http from "http";
 import {AddReminderRequest} from "../models/request/add-reminder-request";
+import {ReminderMapper} from "../models/mapper/reminder.mapper";
+import {ReminderResponse} from "../models/response/reminder-response";
 
 @Injectable({
   providedIn:"root"
@@ -20,18 +21,26 @@ export class ReminderService extends BaseService{
   }
 
   public getAllReminders(): Observable<Reminder[]>{
-    return this.http.get<Reminder[]>(`${this.serviceApiGatewayUrl}/all`)
+    return this.http.get<ReminderResponse[]>(`${this.serviceApiGatewayUrl}/all`).pipe(
+      map(reminderResponses => reminderResponses.map(reminder => ReminderMapper.toEntity(reminder))
+      ));
   }
 
   public getAllUserReminders(userId: string): Observable<Reminder[]>{
-    return this.http.get<Reminder[]>(`${this.serviceApiGatewayUrl}/user/${userId}`)
+    return this.http.get<ReminderResponse[]>(`${this.serviceApiGatewayUrl}/user/${userId}`).pipe(
+      map(reminderResponses => reminderResponses.map(reminder => ReminderMapper.toEntity(reminder))
+      ));
   }
 
   public getReminder(reminderId: String): Observable<Reminder>{
-    return this.http.get<Reminder>(`${this.serviceApiGatewayUrl}/${reminderId}`)
+    return this.http.get<ReminderResponse>(`${this.serviceApiGatewayUrl}/${reminderId}`).pipe(
+      map(reminderResponse => ReminderMapper.toEntity(reminderResponse)
+      ));
   }
 
   public addReminder(addReminderRequest: AddReminderRequest): Observable<Reminder>{
-    return this.http.post(`${this.serviceApiGatewayUrl}/save`, addReminderRequest)
+    return this.http.post(`${this.serviceApiGatewayUrl}/save`, addReminderRequest).pipe(
+      map(reminderResponse => ReminderMapper.toEntity(reminderResponse)
+      ));
   }
 }

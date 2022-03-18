@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Reminder} from "../../../models/entities.model";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-reminder-item',
@@ -7,9 +9,37 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReminderItemComponent implements OnInit {
 
-  constructor() { }
+  @Input() reminder: Reminder;
+  constructor(private router: Router) {
+
+  }
 
   ngOnInit(): void {
+    console.log(JSON.stringify(this.reminder), "current reminder")
   }
+
+  get reminderDate(): string{
+    return this.reminder.reminderDate.getFullYear().toString()
+      + "-"
+      + (this.reminder.reminderDate.getUTCMonth() +1).toString()
+      + "-"
+      + this.reminder.reminderDate.getUTCDate().toString();
+  }
+
+  get time(): string{
+    const timeStamp = this.reminder.reminderDate.toLocaleTimeString().split(" ")[1]
+    return this.reminder.reminderDate.toLocaleTimeString()
+      .split(":")
+      .slice(0,2).join(':') + timeStamp;
+  }
+
+  public navigateToReminder(): void {
+    this.router.navigate(['/reminder'],
+      {
+        queryParams: {reminderId: this.reminder.id}
+      })
+  }
+
+
 
 }

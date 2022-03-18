@@ -1,8 +1,7 @@
 
-<h3 class="mb-4 text-center">Reminder List</h3>
-<app-reminder-item></app-reminder-item>
-<app-reminder-item></app-reminder-item>
-<app-reminder-item></app-reminder-item>
-<app-reminder-item></app-reminder-item>
-<app-reminder-item></app-reminder-item>
+<ng-container *ngIf="reminders$ | async as reminders">
+  <app-reminder-item *ngFor="let reminder of reminders" [reminder]="reminder">
+  </app-reminder-item>
+</ng-container>
+
 

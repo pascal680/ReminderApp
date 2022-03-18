@@ -1,12 +1,14 @@
 <div class="row mb-3">
   <div class="col-lg-3 col-sm-0"></div>
     <div class="col-lg-6 col-sm-12 card bg-light">
-      <div class="card-header">
-        <h5 class="card-title">Reminder Title</h5>
+      <div class="card-body text-center">
+        <button (click)="navigateToReminder()" class="btn btn-info" style="float: right">Details</button>
+
+        <h2 class="card-title">{{reminder.reminderTitle}}</h2>
+        <p class="card-text" *ngIf="reminder.reminderDetails">{{reminder.reminderDetails.description}} 123</p>
       </div>
-      <div class="card-body ">
-        <p class="card-text">Reminder Description</p>
-        <button routerLink="/reminder" class="btn btn-info">Details</button>
+      <div class="card-footer">
+        <h3 class="card-text text-muted">{{reminderDate}} {{time}}</h3>
       </div>
     </div>
   <div class="col-lg-3 col-sm-0"></div>

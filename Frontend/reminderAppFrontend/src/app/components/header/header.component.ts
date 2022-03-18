@@ -9,7 +9,6 @@ import {UserService} from "../../services/user-service";
 export class HeaderComponent implements OnInit {
 
   constructor(private userService: UserService) {
-    this.userService.getAllUsers().subscribe((value)=> console.log(value));
   }
 
   ngOnInit(): void {

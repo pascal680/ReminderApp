@@ -25,9 +25,8 @@ export class UserService extends BaseService {
 
   constructor(private http: HttpClient) {
     super();
-    this.login({email:"pascalbourgoindev@gmail.com", password:"password"}).subscribe() //TODO remove this
-    this.isLoggedIn$ = this.user$.pipe(map(user => !!user));
-    this.isLoggedOut$ = this.isLoggedIn$.pipe(map(loggedIn => !loggedIn));
+    this.isLoggedIn$ = this.user$.pipe(map(user => !!user), shareReplay());
+    this.isLoggedOut$ = this.isLoggedIn$.pipe(map(loggedIn => !loggedIn), shareReplay());
 
     const user = localStorage.getItem(AUTH_DATA);
 
