@@ -13,7 +13,7 @@ public abstract class ReminderMapper {
     return new Reminder(reminderDto.getReminderTitle(),
         Instant.ofEpochSecond(reminderDto.getReminderDate(),0).atOffset(ZoneOffset.UTC).toLocalDateTime(),
         reminderDto.getReminderDetails(),
-        reminderDto.getCategory());
+        reminderDto.getReminderCategory());
   }
 
   public static ReminderAccesDto toVueAccess(Reminder reminder){

@@ -4,8 +4,7 @@
     <div class="form-holder">
       <div class="form-content">
         <div class="form-items">
-          <h3>Create a reminder</h3>
-          <p>Fill in the data below.</p>
+          <h3>Reminder details</h3>
           <form [formGroup]="reminderForm" class="requires-validation" novalidate>
 
             <div class="col-md-12">
@@ -22,8 +21,8 @@
 
             <div class="col-md-12">
               <select class="form-select mt-3" formControlName="reminderCategory" required>
-                <option selected disabled value="">Category</option>
-                <option *ngFor="let category of reminderFormData.categories" value="{{category}}"></option>
+                <option selected disabled [ngValue]="null">Category</option>
+                <option *ngFor="let category of reminderFormData.categories" [ngValue]="category.title" [selected]="category.title == reminderFormData.reminder.reminderCategory.title">{{category.title}}</option>
               </select>
             </div>
 

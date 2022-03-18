@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {BaseService} from "./base.service";
-import {map, Observable} from "rxjs";
+import {map, Observable, tap} from "rxjs";
 import {Reminder} from "../models/entities.model";
 import {HttpClient} from "@angular/common/http";
 import {AddReminderRequest} from "../models/request/add-reminder-request";
@@ -40,7 +40,7 @@ export class ReminderService extends BaseService{
 
   public addReminder(addReminderRequest: AddReminderRequest): Observable<Reminder>{
     return this.http.post(`${this.serviceApiGatewayUrl}/save`, addReminderRequest).pipe(
-      map(reminderResponse => ReminderMapper.toEntity(reminderResponse)
-      ));
+      map(reminderResponse => ReminderMapper.toEntity(reminderResponse)),
+    );
   }
 }

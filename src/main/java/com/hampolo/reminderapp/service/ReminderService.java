@@ -5,8 +5,10 @@ import com.hampolo.reminderapp.dto.ReminderAddDto;
 import com.hampolo.reminderapp.exceptions.AccountNotFoundException;
 import com.hampolo.reminderapp.exceptions.DataNotFoundException;
 import com.hampolo.reminderapp.mapping.ReminderMapper;
+import com.hampolo.reminderapp.model.Category;
 import com.hampolo.reminderapp.model.Reminder;
 import com.hampolo.reminderapp.model.User;
+import com.hampolo.reminderapp.repository.CategoryRepository;
 import com.hampolo.reminderapp.repository.ReminderRepository;
 import com.hampolo.reminderapp.repository.UserRepository;
 import java.util.Collections;
@@ -21,12 +23,16 @@ public class ReminderService {
 
   private final ReminderRepository reminderRepository;
   private final UserRepository userRepository;
+  private final CategoryRepository categoryRepository;
   private final AccountService accountService;
 
   public ReminderService(ReminderRepository reminderRepository,
-      UserRepository userRepository, AccountService accountService) {
+      UserRepository userRepository,
+      CategoryRepository categoryRepository,
+      AccountService accountService) {
     this.reminderRepository = reminderRepository;
     this.userRepository = userRepository;
+    this.categoryRepository = categoryRepository;
     this.accountService = accountService;
   }
 
@@ -38,7 +44,11 @@ public class ReminderService {
     }
 
     List<Reminder> userReminders = user.map(User::getReminders).get();
-    Reminder reminderEntity = ReminderMapper.toEntity(reminderAddDto);////////////////
+    Reminder reminderEntity = ReminderMapper.toEntity(reminderAddDto);
+    if(categoryRepository.findById(reminderEntity.getReminderCategory().getId()).equals(Optional.empty())){
+      Category savedCategory = categoryRepository.save(reminderAddDto.getReminderCategory());
+      reminderEntity.setReminderCategory(savedCategory);
+    }
     Reminder returnedreminder = reminderRepository.save(reminderEntity);
 
     userReminders.add(returnedreminder);

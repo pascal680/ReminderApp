@@ -6,5 +6,5 @@ export interface AddReminderRequest{
   reminderTitle: string;
   reminderDate: number;
   reminderDetails?: ReminderDetails;
-  category?: Category;
+  reminderCategory?: Category;
 }

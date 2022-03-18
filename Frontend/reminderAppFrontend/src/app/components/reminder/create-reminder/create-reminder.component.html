@@ -23,7 +23,7 @@
               <div class="col-md-12">
                 <select class="form-select mt-3" formControlName="reminderCategory">
                   <option selected disabled [ngValue]="null">Category</option>
-                  <option *ngFor="let category of categories" [ngValue]="category.title"></option>
+                  <option *ngFor="let category of categories" [ngValue]="category">{{category.title}}</option>
                 </select>
               </div>
 

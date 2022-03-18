@@ -1,5 +1,6 @@
-<nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark pl-1 mb-4">
-  <a class="navbar-brand" href="#">Reminder App</a>
+<nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark ml-4 pl-1 mb-4" xmlns="http://www.w3.org/1999/html">
+  <a class="navbar-brand" style="margin-left: 1rem;" href="#">Reminder App</a>
+<!--  TODO fix inline css-->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -32,17 +33,24 @@
       </li>
       </ng-container>
     </ul>
-    <ng-container *ngIf="userService.isLoggedIn$ | async">
-    <ul class="navbar-nav ml-auto ">
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <i class="fa fa-bell">
-            <span class="badge badge-info">11</span>
-          </i>
-          Test
-        </a>
-      </li>
-    </ul>
-    </ng-container>
+<!--    <ng-container *ngIf="userService.isLoggedIn$ | async">-->
+<!--    <ul class="navbar-nav ml-auto ">-->
+<!--      <li class="nav-item">-->
+<!--        <a class="nav-link" href="#">-->
+<!--          <i class="fa fa-bell">-->
+<!--            <span class="badge badge-info">11</span>-->
+<!--          </i>-->
+<!--          Test-->
+<!--        </a>-->
+<!--      </li>-->
+<!--    </ul>-->
+<!--    </ng-container>-->
   </div>
+  <ul class="navbar-nav text-center mx-4">
+    <li class="nav-item">
+      <button class="btn btn-danger btn-lg" (click)="logout()">Logout</button>
+    </li>
+  </ul>
 </nav>
+
+

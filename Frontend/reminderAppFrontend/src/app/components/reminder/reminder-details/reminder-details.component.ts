@@ -15,7 +15,7 @@ interface ReminderFormData{
   templateUrl: './reminder-details.component.html',
   styleUrls: ['./reminder-details.component.css']
 })
-export class ReminderDetailsComponent implements OnInit, AfterViewInit {
+export class ReminderDetailsComponent implements OnInit{
 
   reminder$ : Observable<Reminder>;
   categories$: Observable<Category[]>
@@ -28,12 +28,9 @@ export class ReminderDetailsComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.initReminderFormData();
-
-  }
-
-  ngAfterViewInit(): void{
     this.initReminderForm();
   }
+
 
   private initReminder(): void{
     this.reminder$ = this.route.queryParams.pipe(
@@ -71,12 +68,11 @@ export class ReminderDetailsComponent implements OnInit, AfterViewInit {
     this.reminder$.subscribe(reminder => {
 
     this.reminderForm = new FormGroup({
-      reminderTitle: new FormControl(reminder.reminderTitle),
-      reminderDate: new FormControl(reminder.reminderDate.toISOString().slice(0,10)),
-      reminderCategory: new FormControl(reminder.reminderCategory),
-      reminderDescription: new FormControl(reminder.reminderDetails.description)
+      reminderTitle: new FormControl(reminder?.reminderTitle),
+      reminderDate: new FormControl(reminder?.reminderDate.toISOString().slice(0,10)),
+      reminderCategory: new FormControl(reminder?.reminderCategory.title),
+      reminderDescription: new FormControl(reminder.reminderDetails?.description)
     });
-      console.log(this.reminderForm, "---------------------------------")
     })
   }
 

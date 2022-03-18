@@ -7,6 +7,7 @@ import {ReminderService} from "../../../services/reminder-service";
 import {UserService} from "../../../services/user-service";
 import {AddReminderRequest} from "../../../models/request/add-reminder-request";
 
+const MILLISECONDS_TO_SECONDS_CONVERSION = 1000;
 
 @Component({
   selector: 'app-create-reminder',
@@ -45,22 +46,24 @@ export class CreateReminderComponent implements OnInit {
   }
 
   public onSubmitForm(): void{
+    console.log(this.reminderForm.value, 'form values')
     this.userService.user$.pipe(
       map(user => { const addReminderRequest: AddReminderRequest ={
         userId: user.id,
         reminderTitle: this.reminderForm.get('reminderTitle').value,
-        reminderDate: new Date(this.reminderForm.get('reminderDate').value).getTime(),
+        reminderDate: new Date(this.reminderForm.get('reminderDate').value).getTime()/ MILLISECONDS_TO_SECONDS_CONVERSION,
         reminderDetails:{
           description: this.reminderForm.get('reminderDescription').value
         },
-        category:{
-          title: this.reminderForm.get('reminderCategory').value
+        reminderCategory:{
+          id: this.reminderForm.get('reminderCategory').value?.id,
+          title: this.reminderForm.get('reminderCategory').value?.title
         }
       }
       return addReminderRequest
       }),
+      tap(addReminderRequest => console.log("addReminderRequest", addReminderRequest)),
       switchMap(addReminderRequest => this.reminderService.addReminder(addReminderRequest)),
-      tap(returnedReminder => console.log(returnedReminder, "returned!!!")),
       //@ts-ignore TODO fix this
       catchError(error => {
         if(error.status == 404){

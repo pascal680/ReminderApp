@@ -20,5 +20,5 @@ public class ReminderAddDto {
 
   private ReminderDetails reminderDetails;
 
-  private Category category;
+  private Category reminderCategory;
 }
