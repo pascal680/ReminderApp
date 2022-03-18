@@ -2,7 +2,6 @@ package com.hampolo.reminderapp.dto;
 
 import com.hampolo.reminderapp.model.Category;
 import com.hampolo.reminderapp.model.ReminderDetails;
-import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,15 +9,16 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReminderAddDto {
-
-  private String userId;
+public class ReminderAccesDto {
 
   private String reminderTitle;
 
   private Long reminderDate;
 
+  private Long reminderCreationDate;
+
   private ReminderDetails reminderDetails;
 
   private Category category;
+
 }
