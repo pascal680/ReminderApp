@@ -10,7 +10,7 @@ import { ReminderListComponent } from './components/reminder/reminder-list/remin
 import { ReminderItemComponent } from './components/reminder/reminder-item/reminder-item.component';
 import { CreateReminderComponent } from './components/reminder/create-reminder/create-reminder.component';
 import { ReminderDetailsComponent } from './components/reminder/reminder-details/reminder-details.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 
 @NgModule({
@@ -27,7 +27,7 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
+    ReactiveFormsModule,
     HttpClientModule
   ],
   providers: [],
