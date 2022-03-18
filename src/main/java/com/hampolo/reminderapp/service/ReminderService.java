@@ -38,7 +38,7 @@ public class ReminderService {
     }
 
     List<Reminder> userReminders = user.map(User::getReminders).get();
-    Reminder reminderEntity = ReminderMapper.toEntity(reminderAddDto);
+    Reminder reminderEntity = ReminderMapper.toEntity(reminderAddDto);////////////////
     Reminder returnedreminder = reminderRepository.save(reminderEntity);
 
     userReminders.add(returnedreminder);

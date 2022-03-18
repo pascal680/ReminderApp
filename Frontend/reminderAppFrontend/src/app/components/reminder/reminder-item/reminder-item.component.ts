@@ -15,7 +15,7 @@ export class ReminderItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(JSON.stringify(this.reminder), "current reminder")
+    console.log(this.reminder, "current reminder")
   }
 
   get reminderDate(): string{
@@ -36,7 +36,7 @@ export class ReminderItemComponent implements OnInit {
   public navigateToReminder(): void {
     this.router.navigate(['/reminder'],
       {
-        queryParams: {reminderId: this.reminder.id}
+        queryParams: {id: this.reminder.id}
       })
   }
 

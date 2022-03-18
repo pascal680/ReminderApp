@@ -4,7 +4,7 @@ export interface AddReminderRequest{
 
   userId: string;
   reminderTitle: string;
-  reminderDate: Date;
-  reminderDetails?: ReminderDetails[];
+  reminderDate: number;
+  reminderDetails?: ReminderDetails;
   category?: Category;
 }

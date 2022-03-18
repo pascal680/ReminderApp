@@ -17,7 +17,8 @@ public abstract class ReminderMapper {
   }
 
   public static ReminderAccesDto toVueAccess(Reminder reminder){
-    return new ReminderAccesDto(reminder.getReminderTitle(),
+    return new ReminderAccesDto(reminder.getId(),
+        reminder.getReminderTitle(),
         reminder.getReminderDate().toEpochSecond(ZoneOffset.UTC),
         reminder.getReminderCreationDate().toEpochSecond(ZoneOffset.UTC),
         reminder.getReminderDetails(),

@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ReminderAccesDto {
 
+  private String id;
+
   private String reminderTitle;
 
   private Long reminderDate;
