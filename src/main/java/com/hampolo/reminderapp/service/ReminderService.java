@@ -1,5 +1,6 @@
 package com.hampolo.reminderapp.service;
 
+import com.hampolo.reminderapp.dto.ReminderAccesDto;
 import com.hampolo.reminderapp.dto.ReminderAddDto;
 import com.hampolo.reminderapp.exceptions.AccountNotFoundException;
 import com.hampolo.reminderapp.exceptions.DataNotFoundException;
@@ -29,7 +30,7 @@ public class ReminderService {
     this.accountService = accountService;
   }
 
-  public Reminder saveReminder(ReminderAddDto reminderAddDto) throws AccountNotFoundException {
+  public ReminderAccesDto saveReminder(ReminderAddDto reminderAddDto) throws AccountNotFoundException {
     Optional<User> user = userRepository.findById(reminderAddDto.getUserId());
 
     if(user.isEmpty()){
@@ -46,23 +47,30 @@ public class ReminderService {
 
     accountService.saveUser(user.get());
 
-    return returnedreminder;
+    return ReminderMapper.toVueAccess(returnedreminder);
 
 //    return user.map(u -> u.setReminders(()->u.getReminders().add(ReminderMapper.toEntity(reminderAddDto));
   }
 
-  public List<Reminder> getAllReminders(){
-    return reminderRepository.findAll();
+  public List<ReminderAccesDto> getAllReminders(){
+    return reminderRepository.findAll()
+        .stream().map(ReminderMapper::toVueAccess)
+        .collect(Collectors.toList());
   }
 
-  public List<Reminder> getAllUserReminder(String userId) throws AccountNotFoundException {
+  public List<ReminderAccesDto> getAllUserReminder(String userId) throws AccountNotFoundException {
     return userRepository.findById(userId)
         .map(User::getReminders)
-        .orElseThrow(()->new AccountNotFoundException("Account was not found")).stream().sorted(Comparator.comparing(Reminder::getReminderDate)).collect(Collectors.toList());
+        .orElseThrow(()->new AccountNotFoundException("Account was not found"))
+        .stream().sorted(Comparator.comparing(Reminder::getReminderDate))
+        .map(ReminderMapper::toVueAccess)
+        .collect(Collectors.toList());
   }
 
-  public Reminder getReminder(String reminderId) throws DataNotFoundException {
-    return reminderRepository.findById(reminderId).orElseThrow(()->new DataNotFoundException("The data could not be found"));
+  public ReminderAccesDto getReminder(String reminderId) throws DataNotFoundException {
+    return reminderRepository.findById(reminderId)
+        .map(ReminderMapper::toVueAccess)
+        .orElseThrow(()->new DataNotFoundException("The data could not be found"));
   }
 
 

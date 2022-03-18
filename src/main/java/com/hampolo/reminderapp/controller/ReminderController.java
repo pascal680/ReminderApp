@@ -1,5 +1,6 @@
 package com.hampolo.reminderapp.controller;
 
+import com.hampolo.reminderapp.dto.ReminderAccesDto;
 import com.hampolo.reminderapp.dto.ReminderAddDto;
 import com.hampolo.reminderapp.exceptions.AccountNotFoundException;
 import com.hampolo.reminderapp.exceptions.DataNotFoundException;
@@ -29,24 +30,24 @@ public class ReminderController {
   }
 
   @GetMapping("/all")
-  public ResponseEntity<List<Reminder>> getAllReminders(){
+  public ResponseEntity<List<ReminderAccesDto>> getAllReminders(){
     return new ResponseEntity<>(reminderService.getAllReminders(), HttpStatus.OK);
   }
 
   @GetMapping("/user/{userId}")
-  public ResponseEntity<List<Reminder>> getAllUserReminders(@PathVariable String userId)
+  public ResponseEntity<List<ReminderAccesDto>> getAllUserReminders(@PathVariable String userId)
       throws AccountNotFoundException {
     return new ResponseEntity<>(reminderService.getAllUserReminder(userId), HttpStatus.OK);
   }
 
   @GetMapping("/{reminderId}")
-  public ResponseEntity<Reminder> getReminder(@PathVariable String reminderId)
+  public ResponseEntity<ReminderAccesDto> getReminder(@PathVariable String reminderId)
       throws DataNotFoundException {
     return new ResponseEntity<>(reminderService.getReminder(reminderId), HttpStatus.OK);
   }
 
   @PostMapping("/save")
-  public ResponseEntity<Reminder> saveReminder(@RequestBody ReminderAddDto reminderAddDto)
+  public ResponseEntity<ReminderAccesDto> saveReminder(@RequestBody ReminderAddDto reminderAddDto)
       throws AccountNotFoundException {
     return new ResponseEntity<>(reminderService.saveReminder(reminderAddDto), HttpStatus.OK);
   }

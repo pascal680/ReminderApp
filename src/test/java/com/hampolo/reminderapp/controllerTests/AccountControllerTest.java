@@ -14,6 +14,7 @@ import com.hampolo.reminderapp.model.Admin;
 import com.hampolo.reminderapp.model.User;
 import com.hampolo.reminderapp.model.enums.Role;
 import com.hampolo.reminderapp.service.AccountService;
+import com.hampolo.reminderapp.service.CategoryService;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,9 @@ public class AccountControllerTest {
 
   @MockBean
   private AccountService accountService;
+
+  @MockBean
+  private CategoryService categoryService;
 
   public AccountControllerTest() {
     this.mapper = new ObjectMapper().findAndRegisterModules();
