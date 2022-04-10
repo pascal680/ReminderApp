@@ -29,6 +29,8 @@ export interface Reminder{
   reminderCreationDate?: Date;
   reminderDetails?: ReminderDetails;
   reminderCategory?: Category;
+  isAllDay?: boolean;
+  isCompleted?: boolean;
 }
 
 export interface ReminderDetails{

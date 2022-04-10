@@ -7,4 +7,6 @@ export interface ReminderResponse {
   reminderCreationDate?: number;
   reminderDetails?: ReminderDetails;
   reminderCategory?: Category;
+  allDay?: boolean;
+  completed?: boolean;
 }

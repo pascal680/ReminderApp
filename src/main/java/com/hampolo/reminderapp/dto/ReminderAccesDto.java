@@ -23,4 +23,9 @@ public class ReminderAccesDto {
 
   private Category reminderCategory;
 
+  private boolean isAllDay;
+
+  private boolean isCompleted;
 }
+
+

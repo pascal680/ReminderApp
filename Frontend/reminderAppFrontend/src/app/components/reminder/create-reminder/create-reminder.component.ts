@@ -40,10 +40,17 @@ export class CreateReminderComponent implements OnInit {
     this.reminderForm = new FormGroup({
       reminderTitle: new FormControl(),
       reminderDate: new FormControl(),
+      reminderTime: new FormControl(),
+      allDay: new FormControl(),
       reminderCategory: new FormControl(),
       reminderDescription: new FormControl()
     });
   }
+
+  private get reminderDateCreate(): string {
+    return this.reminderForm.get('reminderDate').value + " " + this.reminderForm.get('reminderTime').value;
+  }
+
 
   public onSubmitForm(): void{
     console.log(this.reminderForm.value, 'form values')
@@ -51,7 +58,8 @@ export class CreateReminderComponent implements OnInit {
       map(user => { const addReminderRequest: AddReminderRequest ={
         userId: user.id,
         reminderTitle: this.reminderForm.get('reminderTitle').value,
-        reminderDate: new Date(this.reminderForm.get('reminderDate').value).getTime()/ MILLISECONDS_TO_SECONDS_CONVERSION,
+        reminderDate: new Date(this.reminderDateCreate).getTime()/ MILLISECONDS_TO_SECONDS_CONVERSION,
+        allDay: this.reminderForm.get('allDay').value,
         reminderDetails:{
           description: this.reminderForm.get('reminderDescription').value
         },
@@ -60,6 +68,7 @@ export class CreateReminderComponent implements OnInit {
           title: this.reminderForm.get('reminderCategory').value?.title
         }
       }
+      console.log("!!!!!!!!!!!!!!!!!!");
       return addReminderRequest
       }),
       tap(addReminderRequest => console.log("addReminderRequest", addReminderRequest)),
@@ -73,6 +82,11 @@ export class CreateReminderComponent implements OnInit {
     ).subscribe(() => {
       this.router.navigateByUrl("/home");
     })
+  }
+
+
+  get showDateAndTime(): boolean {
+    return !this.reminderForm.get('allDay').value;
   }
 
 

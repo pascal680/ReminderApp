@@ -12,7 +12,9 @@ export class ReminderMapper {
       reminderDate: new Date(reminderResponse.reminderDate * CONVERSION_MILLISECONDS_TO_SECONDS),
       reminderCreationDate: new Date(reminderResponse.reminderCreationDate * CONVERSION_MILLISECONDS_TO_SECONDS),
       reminderDetails: reminderResponse.reminderDetails,
-      reminderCategory: reminderResponse.reminderCategory
+      reminderCategory: reminderResponse.reminderCategory,
+      isAllDay: reminderResponse.allDay,
+      isCompleted: reminderResponse.completed,
     }
   }
 }

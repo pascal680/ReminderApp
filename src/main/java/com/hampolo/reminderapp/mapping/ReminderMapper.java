@@ -13,7 +13,8 @@ public abstract class ReminderMapper {
     return new Reminder(reminderDto.getReminderTitle(),
         Instant.ofEpochSecond(reminderDto.getReminderDate(),0).atOffset(ZoneOffset.UTC).toLocalDateTime(),
         reminderDto.getReminderDetails(),
-        reminderDto.getReminderCategory());
+        reminderDto.getReminderCategory(),
+        reminderDto.isAllDay());
   }
 
   public static ReminderAccesDto toVueAccess(Reminder reminder){
@@ -22,6 +23,8 @@ public abstract class ReminderMapper {
         reminder.getReminderDate().toEpochSecond(ZoneOffset.UTC),
         reminder.getReminderCreationDate().toEpochSecond(ZoneOffset.UTC),
         reminder.getReminderDetails(),
-        reminder.getReminderCategory());
+        reminder.getReminderCategory(),
+        reminder.isAllDay(),
+        reminder.isCompleted());
   }
 }

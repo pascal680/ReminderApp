@@ -21,6 +21,11 @@ public class Reminder {
 
   private ReminderDetails reminderDetails;
 
+  private boolean isAllDay;
+
+  private boolean isCompleted;
+
+
   @DBRef
   private Category reminderCategory;
 
@@ -28,18 +33,20 @@ public class Reminder {
     this.reminderCreationDate = LocalDateTime.now();
   }
 
-  public Reminder(String reminderTitle, LocalDateTime reminderDate) {
+  public Reminder(String reminderTitle, LocalDateTime reminderDate, boolean isAllDay) {
     this.reminderTitle = reminderTitle;
     this.reminderDate = reminderDate;
+    this.isAllDay = isAllDay;
     this.reminderCreationDate = LocalDateTime.now();
   }
 
   public Reminder(String reminderTitle, LocalDateTime reminderDate,
-      ReminderDetails reminderDetails, Category reminderCategory) {
+      ReminderDetails reminderDetails, Category reminderCategory, boolean isAllDay) {
     this.reminderTitle = reminderTitle;
     this.reminderDate = reminderDate;
     this.reminderDetails = reminderDetails;
     this.reminderCategory = reminderCategory;
+    this.isAllDay = isAllDay;
     this.reminderCreationDate = LocalDateTime.now();
   }
 }

@@ -40,8 +40,8 @@ public class DataInjection implements CommandLineRunner {
     categoryRepository.deleteAll();
     categoryRepository.saveAll(Arrays.asList(categoryPayment, categoryTest));
 
-    Reminder reminder1 = new Reminder("Test reminder1", LocalDateTime.now());
-    Reminder reminder2 = new Reminder("Test reminder2", LocalDateTime.now());
+    Reminder reminder1 = new Reminder("Test reminder1", LocalDateTime.now(), false);
+    Reminder reminder2 = new Reminder("Test reminder2", LocalDateTime.now(), false);
 
     reminderRepository.deleteAll();
     reminderRepository.saveAll(List.of(reminder1, reminder2));

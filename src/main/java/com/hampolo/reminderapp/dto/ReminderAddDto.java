@@ -21,4 +21,6 @@ public class ReminderAddDto {
   private ReminderDetails reminderDetails;
 
   private Category reminderCategory;
+
+  private boolean isAllDay;
 }
