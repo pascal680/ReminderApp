@@ -83,5 +83,30 @@ public class ReminderService {
         .orElseThrow(()->new DataNotFoundException("The data could not be found"));
   }
 
+  public boolean deleteReminder(String reminderId) throws DataNotFoundException {
+    if(reminderRepository.findById(reminderId).isPresent()){
+      reminderRepository.deleteById(reminderId);
+      return true;
+    }
+    throw new DataNotFoundException("The data could not be found");
+  }
+
+  public ReminderAccesDto updateReminder(ReminderAccesDto reminderAccesDto) throws DataNotFoundException {
+    Optional<Reminder> reminder = reminderRepository.findById(reminderAccesDto.getId());
+
+    if(reminder.isEmpty()){
+      throw new DataNotFoundException("The data could not be found");
+    }
+
+    Reminder reminderEntity = ReminderMapper.toEntity(reminderAccesDto);
+    if(categoryRepository.findById(reminderEntity.getReminderCategory().getId()).equals(Optional.empty())){
+      Category savedCategory = categoryRepository.save(reminderAccesDto.getReminderCategory());
+      reminderEntity.setReminderCategory(savedCategory);
+    }
+    Reminder returnedreminder = reminderRepository.save(reminderEntity);
+
+    return ReminderMapper.toVueAccess(returnedreminder);
+  }
+
 
 }

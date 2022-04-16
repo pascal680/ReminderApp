@@ -1,6 +1,7 @@
 package com.hampolo.reminderapp.model;
 
 import com.hampolo.reminderapp.model.enums.Role;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
@@ -12,6 +13,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class User extends Account{
 
   private String phoneNumber;
+
+  private boolean remindByPhone;
+
+  private boolean remindByEmail;
+
+  private LocalTime remindedAtTime;
 
   private List<Reminder> reminders;
 
@@ -27,6 +34,9 @@ public class User extends Account{
     super(firstName, lastName, email, password, Role.User);
     this.reminders = new ArrayList<>();
     this.categories = new ArrayList<>();
+    this.remindByEmail = true;
+    this.remindByPhone = false;
+    this.remindedAtTime = LocalTime.of(9, 0);
     this.phoneNumber = phoneNumber;
   }
 }

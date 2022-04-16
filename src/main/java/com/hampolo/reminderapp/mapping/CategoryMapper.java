@@ -6,8 +6,7 @@ import com.hampolo.reminderapp.model.Category;
 public abstract class CategoryMapper {
 
   public static Category toEntity(CategoryAddDto categoryAddDto){
-    return new Category(categoryAddDto.getTitle(),
-        categoryAddDto.getDescription());
+    return new Category(categoryAddDto.getTitle());
   }
 
 }

@@ -34,8 +34,8 @@ public class DataInjection implements CommandLineRunner {
 
   @Override
   public void run(String... args) throws Exception {
-    Category categoryPayment = new Category("Payment", "Client Payment");
-    Category categoryTest = new Category("Test", "Category Test");
+    Category categoryPayment = new Category("Payment");
+    Category categoryTest = new Category("Test");
 
     categoryRepository.deleteAll();
     categoryRepository.saveAll(Arrays.asList(categoryPayment, categoryTest));

@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Reminder} from "../../../models/entities.model";
 import {Router} from "@angular/router";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-reminder-item',
@@ -37,7 +38,7 @@ export class ReminderItemComponent implements OnInit {
     this.router.navigate(['/reminder'],
       {
         queryParams: {id: this.reminder.id}
-      })
+      });
   }
 
 

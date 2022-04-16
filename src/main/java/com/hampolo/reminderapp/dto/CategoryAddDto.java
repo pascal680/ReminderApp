@@ -13,6 +13,4 @@ public class CategoryAddDto {
 
   private String title;
 
-  private String description;
-
 }

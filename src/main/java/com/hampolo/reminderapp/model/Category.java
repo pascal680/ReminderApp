@@ -12,14 +12,12 @@ public class Category {
   private String id;
 
   private String title;
-  private String description;
 
   public Category(){
 
   }
 
-  public Category(String title, String description) {
+  public Category(String title) {
     this.title = title;
-    this.description = description;
   }
 }

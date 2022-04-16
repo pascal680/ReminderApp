@@ -27,4 +27,12 @@ public abstract class ReminderMapper {
         reminder.isAllDay(),
         reminder.isCompleted());
   }
+
+  public static Reminder toEntity(ReminderAccesDto reminderDto){
+    return new Reminder(reminderDto.getReminderTitle(),
+        Instant.ofEpochSecond(reminderDto.getReminderDate(),0).atOffset(ZoneOffset.UTC).toLocalDateTime(),
+        reminderDto.getReminderDetails(),
+        reminderDto.getReminderCategory(),
+        reminderDto.isAllDay());
+  }
 }
