@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hampolo.reminderapp.controller.AccountController;
 import com.hampolo.reminderapp.controller.ReminderController;
 import com.hampolo.reminderapp.dto.ReminderAccesDto;
+import com.hampolo.reminderapp.dto.ReminderAddDto;
+import com.hampolo.reminderapp.exceptions.AccountNotFoundException;
+import com.hampolo.reminderapp.exceptions.DataNotFoundException;
 import com.hampolo.reminderapp.mapping.ReminderMapper;
 import com.hampolo.reminderapp.model.Reminder;
 import com.hampolo.reminderapp.service.ReminderService;
@@ -25,6 +28,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.any;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @ContextConfiguration(
     classes = ReminderController.class,
@@ -47,7 +51,7 @@ public class ReminderControllerTest {
 
   @Test
   public void testGetAllReminders() throws Exception {
-    List<ReminderAccesDto> expected = getReminders().stream().map(reminder -> ReminderMapper.toVueAccess(reminder)).collect(
+    List<ReminderAccesDto> expected = getReminders().stream().map(ReminderMapper::toVueAccess).collect(
         Collectors.toList());
     when(reminderService.getAllReminders()).thenReturn(expected);
 
@@ -56,6 +60,76 @@ public class ReminderControllerTest {
         .andReturn();
 
     assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+  }
+
+  @Test
+  public void testGetAllUserReminders() throws Exception {
+    List<ReminderAccesDto> expected = getReminders().stream().map(ReminderMapper::toVueAccess).collect(
+        Collectors.toList());
+    when(reminderService.getAllUserReminders(any(String.class))).thenReturn(expected);
+
+    MvcResult result = mockMvc.perform(get("/reminder/user/test")
+        .contentType("application/json"))
+        .andReturn();
+
+    assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+  }
+
+  @Test
+  public void testGetAllUserRemindersNoUser() throws Exception {
+    when(reminderService.getAllUserReminders(any(String.class))).thenThrow(AccountNotFoundException.class);
+    MvcResult result = mockMvc.perform(get("/reminder/user/test")
+        .contentType("application/json"))
+        .andReturn();
+
+    assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+  }
+
+  @Test
+  public void testGetReminder() throws Exception {
+    ReminderAccesDto expected = ReminderMapper.toVueAccess(getReminders().get(0));
+    when(reminderService.getReminder(any(String.class))).thenReturn(expected);
+
+    MvcResult result = mockMvc.perform(get("/reminder/1")
+        .contentType("application/json"))
+        .andReturn();
+
+    assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+  }
+
+  @Test
+  public void testGetReminderNotFound() throws Exception {
+    when(reminderService.getReminder(any(String.class))).thenThrow(DataNotFoundException.class);
+    MvcResult result = mockMvc.perform(get("/reminder/1")
+        .contentType("application/json"))
+        .andReturn();
+
+    assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+  }
+
+
+  @Test
+  public void testSaveReminder() throws Exception {
+    ReminderAccesDto expected = ReminderMapper.toVueAccess(getReminders().get(0));
+    when(reminderService.saveReminder(any(ReminderAddDto.class))).thenReturn(expected);
+
+    MvcResult result = mockMvc.perform(get("/reminder/save")
+        .contentType("application/json"))
+        .andReturn();
+
+    assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+  }
+
+  @Test
+  public void testSaveReminderNoUser() throws Exception {
+    ReminderAddDto reminderAddDto = new ReminderAddDto();
+    when(reminderService.saveReminder(reminderAddDto)).thenThrow(AccountNotFoundException.class);
+    MvcResult result = mockMvc.perform(post("/reminder/save")
+        .contentType("application/json")
+        .content(mapper.writeValueAsString(reminderAddDto)))
+        .andReturn();
+
+    assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
   }
 
 

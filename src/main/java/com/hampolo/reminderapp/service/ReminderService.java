@@ -11,7 +11,6 @@ import com.hampolo.reminderapp.model.User;
 import com.hampolo.reminderapp.repository.CategoryRepository;
 import com.hampolo.reminderapp.repository.ReminderRepository;
 import com.hampolo.reminderapp.repository.UserRepository;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -68,7 +67,7 @@ public class ReminderService {
         .collect(Collectors.toList());
   }
 
-  public List<ReminderAccesDto> getAllUserReminder(String userId) throws AccountNotFoundException {
+  public List<ReminderAccesDto> getAllUserReminders(String userId) throws AccountNotFoundException {
     return userRepository.findById(userId)
         .map(User::getReminders)
         .orElseThrow(()->new AccountNotFoundException("Account was not found"))

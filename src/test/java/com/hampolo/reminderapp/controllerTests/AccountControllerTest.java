@@ -167,7 +167,6 @@ public class AccountControllerTest {
   @Test
   public void testRegisterUserError()  throws Exception {
     UserRegistrationFormDto userRegisterRequest = new UserRegistrationFormDto("Test", "TestLN", "test@test", "password", "123456789");
-    User expected = getUsers().get(0);
 
     when(accountService.registerUser(userRegisterRequest)).thenThrow(DuplicateUserException.class);
 

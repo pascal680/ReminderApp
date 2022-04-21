@@ -4,8 +4,6 @@ import com.hampolo.reminderapp.dto.ReminderAccesDto;
 import com.hampolo.reminderapp.dto.ReminderAddDto;
 import com.hampolo.reminderapp.exceptions.AccountNotFoundException;
 import com.hampolo.reminderapp.exceptions.DataNotFoundException;
-import com.hampolo.reminderapp.model.Reminder;
-import com.hampolo.reminderapp.repository.ReminderRepository;
 import com.hampolo.reminderapp.service.ReminderService;
 import java.util.List;
 import org.springframework.http.HttpStatus;
@@ -37,7 +35,7 @@ public class ReminderController {
   @GetMapping("/user/{userId}")
   public ResponseEntity<List<ReminderAccesDto>> getAllUserReminders(@PathVariable String userId)
       throws AccountNotFoundException {
-    return new ResponseEntity<>(reminderService.getAllUserReminder(userId), HttpStatus.OK);
+    return new ResponseEntity<>(reminderService.getAllUserReminders(userId), HttpStatus.OK);
   }
 
   @GetMapping("/{reminderId}")
