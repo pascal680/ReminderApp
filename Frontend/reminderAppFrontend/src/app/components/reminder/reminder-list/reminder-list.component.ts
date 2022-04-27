@@ -11,17 +11,12 @@ import {UserService} from "../../../services/user-service";
 })
 export class ReminderListComponent implements OnInit {
 
-  reminders$ : Observable<Reminder[]>;
-  constructor(private reminderService: ReminderService, private userService: UserService) { }
+  constructor(public reminderService: ReminderService) { }
 
   ngOnInit(): void {
-    this.initReminders();
+    this.reminderService.refreshReminders();
   }
 
-  private initReminders(): void{
-    this.reminders$ = this.userService.user$.pipe(
-      switchMap(user=>this.reminderService.getAllUserReminders(user.id))
-  );
-}
+
 
 }

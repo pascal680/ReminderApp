@@ -11,7 +11,10 @@
         <p class="card-text" *ngIf="reminder.reminderDetails?.description">{{reminder.reminderDetails.description}}</p>
       </div>
       <div class="card-footer">
-        <h3 class="card-text text-muted">{{reminderDate}} {{time}}</h3>
+        <h3 class="card-text text-muted h3">{{reminderDate}} {{time}}</h3>
+        <span class="float-right"><i class="fa-solid fa-circle-info text-end fa-2x" (click)="navigateToReminder()"></i></span>
+        <i class="fa-solid fa-trash-can fa-2x" (click)="deleteReminder()"></i>
+
       </div>
     </div>
   <div class="col-lg-3 col-sm-0"></div>

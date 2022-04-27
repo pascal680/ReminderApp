@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Reminder} from "../../../models/entities.model";
 import {Router} from "@angular/router";
 import Swal from "sweetalert2";
+import {ReminderService} from "../../../services/reminder-service";
 
 @Component({
   selector: 'app-reminder-item',
@@ -11,7 +12,7 @@ import Swal from "sweetalert2";
 export class ReminderItemComponent implements OnInit {
 
   @Input() reminder: Reminder;
-  constructor(private router: Router) {
+  constructor(private router: Router, private reminderService: ReminderService) {
 
   }
 
@@ -39,6 +40,39 @@ export class ReminderItemComponent implements OnInit {
       {
         queryParams: {id: this.reminder.id}
       });
+  }
+
+  public deleteReminder(): void {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.reminderService.deleteReminder(this.reminder.id).subscribe(
+          (result) => {
+            if(result){
+              Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+              )
+              this.reminderService.refreshReminders();
+              return;
+            }
+            Swal.fire(
+              'Not Deleted!',
+              'We were unable to delete this reminder.',
+              'error'
+            )
+          }
+        )
+      }
+    })
   }
 
 
