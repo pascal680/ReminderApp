@@ -3,8 +3,8 @@ import {catchError, combineLatest, map, Observable, shareReplay, switchMap, tap}
 import {Category, Reminder} from "../../../models/entities.model";
 import {FormControl, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
-import {ReminderService} from "../../../services/reminder-service";
-import {UserService} from "../../../services/user-service";
+import {ReminderService} from "../../../services/reminder.service";
+import {UserService} from "../../../services/user.service";
 import {AddReminderRequest} from "../../../models/request/add-reminder-request";
 
 const MILLISECONDS_TO_SECONDS_CONVERSION = 1000;

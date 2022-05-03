@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Reminder} from "../../../models/entities.model";
 import {Router} from "@angular/router";
 import Swal from "sweetalert2";
-import {ReminderService} from "../../../services/reminder-service";
+import {ReminderService} from "../../../services/reminder.service";
 
 @Component({
   selector: 'app-reminder-item',

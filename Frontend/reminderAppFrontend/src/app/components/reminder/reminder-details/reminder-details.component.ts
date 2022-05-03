@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {catchError, combineLatest, map, Observable, shareReplay, switchMap, tap} from "rxjs";
-import {ReminderService} from "../../../services/reminder-service";
+import {ReminderService} from "../../../services/reminder.service";
 import {Category, Reminder} from "../../../models/entities.model";
 import {FormControl, FormGroup} from "@angular/forms";
-import {UserService} from "../../../services/user-service";
+import {UserService} from "../../../services/user.service";
 
 interface ReminderFormData{
   reminder: Reminder;

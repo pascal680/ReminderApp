@@ -6,7 +6,7 @@ import {HttpClient} from "@angular/common/http";
 import {AddReminderRequest} from "../models/request/add-reminder-request";
 import {ReminderMapper} from "../models/mapper/reminder.mapper";
 import {ReminderResponse} from "../models/response/reminder-response";
-import {UserService} from "./user-service";
+import {UserService} from "./user.service";
 
 @Injectable({
   providedIn:"root"
