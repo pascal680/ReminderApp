@@ -46,11 +46,22 @@
 <!--    </ul>-->
 <!--    </ng-container>-->
   </div>
-  <ul class="navbar-nav text-center mx-4">
-    <li class="nav-item">
-      <button class="btn btn-danger btn-lg" (click)="logout()">Logout</button>
-    </li>
-  </ul>
+  <ng-container *ngIf="userService.isLoggedIn$ | async">
+    <div class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <i class="fa fa-user"></i>
+          {{(userService.user$ | async)?.firstName}}
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="logout()">
+          <i class="fa fa-sign-out"></i>
+          Logout
+        </a>
+      </li>
+    </div>
+    </ng-container>
 </nav>
 
 

@@ -1,7 +1,11 @@
 
-<ng-container *ngIf="reminderService.reminders$ | async as reminders">
+<ng-container *ngIf="reminderStore.reminders$ | async as reminders; else NoRemindersTemplate">
   <app-reminder-item *ngFor="let reminder of reminders" [reminder]="reminder">
   </app-reminder-item>
 </ng-container>
+
+<ng-template #NoRemindersTemplate>
+  <p>No reminders</p>
+</ng-template>
 
 

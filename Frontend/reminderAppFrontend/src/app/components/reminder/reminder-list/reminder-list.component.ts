@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable, switchMap, tap} from "rxjs";
-import {Reminder} from "../../../models/entities.model";
-import {ReminderService} from "../../../services/reminder.service";
-import {UserService} from "../../../services/user.service";
+import {ReminderStore} from "../../../services/reminder.store";
 
 @Component({
   selector: 'app-reminder-list',
@@ -11,10 +8,9 @@ import {UserService} from "../../../services/user.service";
 })
 export class ReminderListComponent implements OnInit {
 
-  constructor(public reminderService: ReminderService) { }
+  constructor(public reminderStore: ReminderStore) { }
 
   ngOnInit(): void {
-    this.reminderService.refreshReminders();
   }
 
 

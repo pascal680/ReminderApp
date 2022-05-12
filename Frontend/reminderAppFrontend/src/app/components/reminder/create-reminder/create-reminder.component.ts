@@ -3,9 +3,9 @@ import {catchError, combineLatest, map, Observable, shareReplay, switchMap, tap}
 import {Category, Reminder} from "../../../models/entities.model";
 import {FormControl, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
-import {ReminderService} from "../../../services/reminder.service";
 import {UserService} from "../../../services/user.service";
 import {AddReminderRequest} from "../../../models/request/add-reminder-request";
+import {ReminderStore} from "../../../services/reminder.store";
 
 const MILLISECONDS_TO_SECONDS_CONVERSION = 1000;
 
@@ -20,7 +20,7 @@ export class CreateReminderComponent implements OnInit {
 
   reminderForm: FormGroup;
 
-  constructor(private reminderService: ReminderService,
+  constructor(private reminderStore: ReminderStore,
               private userService: UserService,
               private router: Router) { }
 
@@ -48,8 +48,11 @@ export class CreateReminderComponent implements OnInit {
   }
 
   private get reminderDateCreate(): string {
-    return this.reminderForm.get('reminderDate').value + " " + this.reminderForm.get('reminderTime').value;
+    return this.reminderForm.get('allDay').value?
+      this.reminderForm.get('reminderDate').value :
+      this.reminderForm.get('reminderDate').value + " " + this.reminderForm.get('reminderTime').value;
   }
+
 
 
   public onSubmitForm(): void{
@@ -68,11 +71,9 @@ export class CreateReminderComponent implements OnInit {
           title: this.reminderForm.get('reminderCategory').value?.title
         }
       }
-      console.log("!!!!!!!!!!!!!!!!!!");
       return addReminderRequest
       }),
-      tap(addReminderRequest => console.log("addReminderRequest", addReminderRequest)),
-      switchMap(addReminderRequest => this.reminderService.addReminder(addReminderRequest)),
+      switchMap(addReminderRequest => this.reminderStore.addReminder(addReminderRequest)),
       //@ts-ignore TODO fix this
       catchError(error => {
         if(error.status == 404){
@@ -84,13 +85,8 @@ export class CreateReminderComponent implements OnInit {
     })
   }
 
-
-  get showDateAndTime(): boolean {
-    return !this.reminderForm.get('allDay').value;
+  get isAllDay(): boolean {
+    return this.reminderForm.get('allDay').value;
   }
-
-
-
-
 
 }

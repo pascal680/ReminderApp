@@ -23,22 +23,25 @@ export class ReminderStore {
     ).subscribe();
   }
 
-  public addCourse(addReminderRequest: AddReminderRequest) {
-    this.reminderService.addReminder(addReminderRequest).subscribe(
+  public addReminder(addReminderRequest: AddReminderRequest): Observable<Reminder> {
+    return this.reminderService.addReminder(addReminderRequest).pipe(
+      tap(
       () => this.loadAllReminders()
+    )
     )
   }
 
-  public deleteReminder(reminderId: string) {
-    this.reminderService.deleteReminder(reminderId).subscribe((result) => {
+  public deleteReminder(reminderId: string): Observable<boolean> {
+    return this.reminderService.deleteReminder(reminderId).pipe(tap((result) => {
         if (result) {
           const reminders = this.reminderSubject.getValue();
           const index = reminders.findIndex(reminder => reminder.id === reminderId);
           reminders.splice(index);
+          console.log("spliced reminders", reminders);
           this.reminderSubject.next(reminders);
         }
       }
-    )
+    ))
   }
 
   public filterByCategory(category: string): Observable<Reminder[]> {

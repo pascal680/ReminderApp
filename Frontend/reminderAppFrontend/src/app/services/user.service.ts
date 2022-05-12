@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Category, User} from "../models/entities.model";
 import {BaseService} from "./base.service";
-import {BehaviorSubject, map, Observable, shareReplay, tap} from "rxjs";
+import {BehaviorSubject, map, Observable, shareReplay, take, tap} from "rxjs";
 import {LoginRequest} from "../models/request/login-request";
 import {UserRegistrationFormRequest} from "../models/request/user-registration-form-request";
 import {AddCategoryRequest} from "../models/request/add-category-request";
@@ -49,6 +49,7 @@ export class UserService extends BaseService {
         this.userSubject.next(user);
         localStorage.setItem(AUTH_DATA, JSON.stringify(user));
       }),
+      take(1),
       shareReplay()
     );
   }

@@ -13,25 +13,12 @@ import {UserService} from "./user.service";
 })
 export class ReminderService extends BaseService{
 
-  public reminders$: Observable<Reminder[]>;
-
   constructor(private http: HttpClient, private userService: UserService) {
     super();
-    this.initReminders()
   }
 
   private get serviceApiGatewayUrl(): string {
     return this.apiGatewayUrl + "/reminder";
-  }
-
-  private initReminders(): void{
-    this.reminders$ = this.userService.user$.pipe(
-      switchMap(user=>this.getAllUserReminders(user.id))
-    );
-  }
-
-  public refreshReminders(): void{
-    this.initReminders();
   }
 
   public getAllReminders(): Observable<Reminder[]>{
@@ -58,7 +45,7 @@ export class ReminderService extends BaseService{
     );
   }
 
-  public deleteReminder(reminderId: String): Observable<Boolean>{
+  public deleteReminder(reminderId: String): Observable<boolean>{
     return this.http.delete<boolean>(`${this.serviceApiGatewayUrl}/delete/${reminderId}`);
   }
 }

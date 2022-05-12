@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Reminder} from "../../../models/entities.model";
 import {Router} from "@angular/router";
 import Swal from "sweetalert2";
-import {ReminderService} from "../../../services/reminder.service";
+import {ReminderStore} from "../../../services/reminder.store";
 
 @Component({
   selector: 'app-reminder-item',
@@ -12,7 +12,7 @@ import {ReminderService} from "../../../services/reminder.service";
 export class ReminderItemComponent implements OnInit {
 
   @Input() reminder: Reminder;
-  constructor(private router: Router, private reminderService: ReminderService) {
+  constructor(private router: Router, private reminderStore: ReminderStore) {
 
   }
 
@@ -32,7 +32,12 @@ export class ReminderItemComponent implements OnInit {
     const timeStamp = this.reminder.reminderDate.toLocaleTimeString().split(" ")[1]
     return this.reminder.reminderDate.toLocaleTimeString()
       .split(":")
-      .slice(0,2).join(':') + timeStamp;
+      .slice(0,2).join(':') + timeStamp
+
+  }
+
+  get isAllDay(): boolean{
+    return this.reminder.isAllDay
   }
 
   public navigateToReminder(): void {
@@ -53,7 +58,7 @@ export class ReminderItemComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
-        this.reminderService.deleteReminder(this.reminder.id).subscribe(
+        this.reminderStore.deleteReminder(this.reminder.id).subscribe(
           (result) => {
             if(result){
               Swal.fire(
@@ -61,7 +66,6 @@ export class ReminderItemComponent implements OnInit {
                 'Your file has been deleted.',
                 'success'
               )
-              this.reminderService.refreshReminders();
               return;
             }
             Swal.fire(

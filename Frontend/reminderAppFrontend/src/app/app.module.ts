@@ -12,6 +12,9 @@ import { CreateReminderComponent } from './components/reminder/create-reminder/c
 import { ReminderDetailsComponent } from './components/reminder/reminder-details/reminder-details.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
+import { CreateProfileComponent } from './components/profile/create-profile/create-profile.component';
+import Swal from "sweetalert2";
+import {SwalService} from "./services/swal.service";
 
 @NgModule({
   declarations: [
@@ -22,7 +25,8 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
     ReminderListComponent,
     ReminderItemComponent,
     CreateReminderComponent,
-    ReminderDetailsComponent
+    ReminderDetailsComponent,
+    CreateProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +34,7 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [SwalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
