@@ -22,6 +22,7 @@ import com.hampolo.reminderapp.model.enums.Role;
 import com.hampolo.reminderapp.repository.UserRepository;
 import com.hampolo.reminderapp.service.AccountService;
 import com.hampolo.reminderapp.service.CategoryService;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -150,7 +151,14 @@ public class AccountControllerTest {
 
   @Test
   public void testRegisterUserSuccess()  throws Exception {
-    UserRegistrationFormDto userRegisterRequest = new UserRegistrationFormDto("Test", "TestLN", "test@test", "password", "123456789");
+    UserRegistrationFormDto userRegisterRequest = new UserRegistrationFormDto("Test",
+        "TestLN",
+        "test@test",
+        "password",
+        "123456789",
+        true,
+        true,
+        LocalTime.now());
     User expected = getUsers().get(0);
 
     when(accountService.registerUser(userRegisterRequest)).thenReturn(expected);
@@ -166,7 +174,14 @@ public class AccountControllerTest {
 
   @Test
   public void testRegisterUserError()  throws Exception {
-    UserRegistrationFormDto userRegisterRequest = new UserRegistrationFormDto("Test", "TestLN", "test@test", "password", "123456789");
+    UserRegistrationFormDto userRegisterRequest = new UserRegistrationFormDto("Test",
+        "TestLN",
+        "test@test",
+        "password",
+        "123456789",
+        true,
+        true,
+        LocalTime.now());
 
     when(accountService.registerUser(userRegisterRequest)).thenThrow(DuplicateUserException.class);
 
@@ -253,8 +268,22 @@ public class AccountControllerTest {
 
   private List<User> getUsers() {
     return List.of(
-        new User("User1", "UserLN1", "user@test", "password", "12345"),
-        new User("User2", "UserLN2", "user2@test", "password2", "123456")
+        new User("User1",
+            "UserLN1",
+            "user@test",
+            "password",
+            "12345",
+            true,
+            true,
+            LocalTime.now()),
+        new User("User2",
+            "UserLN2",
+            "user2@test",
+            "password2",
+            "123456",
+            true,
+            true,
+            LocalTime.now())
         );
   }
   private List<Admin> getAdmins(){

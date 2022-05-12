@@ -9,6 +9,7 @@ import com.hampolo.reminderapp.repository.CategoryRepository;
 import com.hampolo.reminderapp.repository.ReminderRepository;
 import com.hampolo.reminderapp.repository.UserRepository;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -50,7 +51,10 @@ public class DataInjection implements CommandLineRunner {
         "Bourgoin",
         "pascalbourgoindev@gmail.com",
         "password",
-        "5149100627");
+        "5149100627",
+        false,
+        true,
+        LocalTime.now());
 
     user.setReminders(List.of(reminder1));
 
@@ -60,7 +64,10 @@ public class DataInjection implements CommandLineRunner {
         "Bourgoin1",
         "pascalbourgoindev@gmail.com1",
         "password",
-        "51491006271");
+        "51491006271",
+        false,
+        true,
+        LocalTime.now());
 
     user2.setReminders(List.of(reminder1,reminder2));
 

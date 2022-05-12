@@ -9,6 +9,7 @@ import com.hampolo.reminderapp.model.User;
 import com.hampolo.reminderapp.repository.AdminRepository;
 import com.hampolo.reminderapp.repository.UserRepository;
 import com.hampolo.reminderapp.service.AccountService;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -116,14 +117,34 @@ public class AccountServiceTest {
 
   private List<User> getUsers() {
     return List.of(
-        new User("User1", "UserLN1", "user@test", "password", "12345"),
-        new User("User2", "UserLN2", "user2@test", "password2", "123456")
+        new User("User1",
+            "UserLN1",
+            "user@test",
+            "password",
+            "12345",
+            true,
+            true,
+            LocalTime.now()),
+        new User("User2",
+            "UserLN2",
+            "user2@test",
+            "password2",
+            "123456",
+            true,
+            true,
+            LocalTime.now())
     );
   }
   private List<Admin> getAdmins(){
     return List.of(
-        new Admin("Admin1", "AdminLN1", "admin@test", "password"),
-        new Admin("Admin2", "AdminLN2", "admin2@test", "password2")
+        new Admin("Admin1",
+            "AdminLN1",
+            "admin@test",
+            "password"),
+        new Admin("Admin2",
+            "AdminLN2",
+            "admin2@test",
+            "password2")
     );
   }
 

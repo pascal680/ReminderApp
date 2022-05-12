@@ -30,13 +30,13 @@ public class User extends Account{
   }
 
   public User(String firstName, String lastName, String email, String password,
-      String phoneNumber) {
+      String phoneNumber, boolean remindByPhone, boolean remindByEmail, LocalTime remindedAtTime){
     super(firstName, lastName, email, password, Role.User);
     this.reminders = new ArrayList<>();
     this.categories = new ArrayList<>();
-    this.remindByEmail = true;
-    this.remindByPhone = false;
-    this.remindedAtTime = LocalTime.of(9, 0);
+    this.remindByEmail = remindByEmail;
+    this.remindByPhone = remindByPhone;
+    this.remindedAtTime = remindedAtTime;
     this.phoneNumber = phoneNumber;
   }
 }

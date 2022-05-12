@@ -10,7 +10,10 @@ public abstract class UserMapper {
         userDto.getLastName(),
         userDto.getEmail(),
         userDto.getPassword(),
-        userDto.getPhoneNumber());
+        userDto.getPhoneNumber(),
+        userDto.isRemindByEmail(),
+        userDto.isRemindByPhone(),
+        userDto.getRemindedAtTIme());
   }
 
 }
