@@ -1,4 +1,4 @@
-
+<div class="text-right m-3"><i (click)="reminderStore.refreshReminders()" class="fa-solid fa-2x fa-rotate"></i></div>
 <ng-container *ngIf="reminderStore.reminders$ | async as reminders; else NoRemindersTemplate">
   <app-reminder-item *ngFor="let reminder of reminders" [reminder]="reminder">
   </app-reminder-item>

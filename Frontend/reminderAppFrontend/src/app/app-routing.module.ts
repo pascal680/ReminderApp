@@ -8,6 +8,7 @@ import {CreateProfileComponent} from "./components/profile/create-profile/create
 
 const routes: Routes = [
   {path: "", component: LoginComponent},
+  {path:"login", component: LoginComponent},
   {path:"home", component:ReminderListComponent},
   {path:"createProfile", component:CreateProfileComponent},
   {path:"reminder", component: ReminderDetailsComponent},

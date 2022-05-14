@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validator, Validators} from "@angular/forms";
 import {UserService} from "../../../services/user.service";
 import {BehaviorSubject, map, Observable, of, shareReplay, switchMap, tap} from "rxjs";
 import {SwalService} from "../../../services/swal.service";
+import {Router} from "@angular/router";
 
 interface remindByOptions {
   remindByPhone: boolean;
@@ -16,18 +17,15 @@ interface remindByOptions {
 })
 export class CreateProfileComponent implements OnInit {
 
-  private passwordConfirmedSubject = new BehaviorSubject<boolean>(true);
-  passwordConfirmed$ = this.passwordConfirmedSubject.asObservable();
 
   userProfileForm: FormGroup;
 
 
 
-  constructor(private userService: UserService, private swalService: SwalService) { }
+  constructor(private userService: UserService, private swalService: SwalService, private router: Router) { }
 
   ngOnInit(): void {
     this.initUserProfileForm();
-    this.passwordConfirmed();
   }
 
   private initUserProfileForm() {
@@ -55,19 +53,16 @@ export class CreateProfileComponent implements OnInit {
     }
   }
 
-  passwordConfirmed(): void{
-    this.userProfileForm.get("passwordConfirmation").valueChanges.pipe(tap(value => {
-      console.log("sees changes")
-      this.passwordConfirmedSubject.next(value === this.userProfileForm.get("password").dirty);
-        })).subscribe();
+  passwordConfirmed(): Observable<boolean> {
+    if(this.userProfileForm.get("passwordConfirmation").dirty){
+      return of(this.userProfileForm.get('password').value === this.userProfileForm.get('passwordConfirmation').value)
+    }
+    return of(true);
   }
 
   public onSubmitForm() {
-
-      console.log("submit form");
       if(this.userProfileForm.valid) {
-        console.log("valid");
-        this.passwordConfirmed$.pipe(tap((confirmed)=> console.log("entering", confirmed)),switchMap(confirmed => {
+        this.passwordConfirmed().pipe(switchMap(confirmed => {
           if (confirmed) {
             console.log("confirmed");
             let userProfile = this.userProfileForm.value;
@@ -76,14 +71,16 @@ export class CreateProfileComponent implements OnInit {
             delete userProfile.remindBy;
             return this.userService.registerUser(userProfile);
           }
+          this.swalService.timedAlertError("Error", "Password confirmation failed");
           return of(null);
         }))
           .subscribe((data) =>{ if(data) {
-            this.swalService.success("1", "2", "success", 1000).then(() => console.log("success"))
+            this.swalService.timedAlertSuccess("Account created", "Successfully created the account")
+              .then(()=>this.router.navigate(['/login']));
           }
         });
-      }else{
-        console.log("notvalid");
+      }else {
+        this.swalService.timedAlertError("Error", "Please fill in all the fields");
       }
       // this.userService.registerUser(this.userProfileForm.value)
   }

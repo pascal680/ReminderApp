@@ -1,6 +1,6 @@
 export enum Role{
-  User,
-  Admin
+  User="User",
+  Admin="Admin"
 }
 
 export enum Priority{

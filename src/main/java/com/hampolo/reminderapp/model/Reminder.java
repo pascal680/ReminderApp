@@ -3,6 +3,7 @@ package com.hampolo.reminderapp.model;
 import java.time.LocalDateTime;
 import javax.persistence.Id;
 import lombok.Data;
+import org.hibernate.annotations.Cascade;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -27,6 +28,7 @@ public class Reminder {
 
 
   @DBRef
+  @Cascade(org.hibernate.annotations.CascadeType.ALL)
   private Category reminderCategory;
 
   public Reminder(){

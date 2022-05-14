@@ -58,7 +58,6 @@ public class ReminderService {
 
     return ReminderMapper.toVueAccess(returnedreminder);
 
-//    return user.map(u -> u.setReminders(()->u.getReminders().add(ReminderMapper.toEntity(reminderAddDto));
   }
 
   public List<ReminderAccesDto> getAllReminders(){
@@ -70,6 +69,8 @@ public class ReminderService {
   public List<ReminderAccesDto> getAllUserReminders(String userId) throws AccountNotFoundException {
     return userRepository.findById(userId)
         .map(User::getReminders)
+        .map(r -> r.stream().filter(a->reminderRepository.findById(a.getId()).isPresent()).collect(
+                Collectors.toList()))
         .orElseThrow(()->new AccountNotFoundException("Account was not found"))
         .stream().sorted(Comparator.comparing(Reminder::getReminderDate))
         .map(ReminderMapper::toVueAccess)

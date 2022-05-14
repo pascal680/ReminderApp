@@ -41,8 +41,13 @@ export class ReminderService extends BaseService{
 
   public addReminder(addReminderRequest: AddReminderRequest): Observable<Reminder>{
     return this.http.post(`${this.serviceApiGatewayUrl}/save`, addReminderRequest).pipe(
-      map(reminderResponse => ReminderMapper.toEntity(reminderResponse)),
+      map(reminderResponse => ReminderMapper.toEntity(reminderResponse))
     );
+  }
+
+  public updateReminder(reminder: ReminderResponse): Observable<Reminder>{
+    return this.http.put(`${this.serviceApiGatewayUrl}/update`, reminder).pipe(
+      map(reminderResponse => ReminderMapper.toEntity(reminderResponse)));
   }
 
   public deleteReminder(reminderId: String): Observable<boolean>{

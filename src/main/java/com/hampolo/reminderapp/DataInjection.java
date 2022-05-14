@@ -37,9 +37,11 @@ public class DataInjection implements CommandLineRunner {
   public void run(String... args) throws Exception {
     Category categoryPayment = new Category("Payment");
     Category categoryTest = new Category("Test");
+    Category categoryDeposit = new Category("Deposit");
+
 
     categoryRepository.deleteAll();
-    categoryRepository.saveAll(Arrays.asList(categoryPayment, categoryTest));
+    categoryRepository.saveAll(Arrays.asList(categoryPayment, categoryTest, categoryDeposit));
 
     Reminder reminder1 = new Reminder("Test reminder1", LocalDateTime.now(), false);
     Reminder reminder2 = new Reminder("Test reminder2", LocalDateTime.now(), false);
@@ -58,7 +60,7 @@ public class DataInjection implements CommandLineRunner {
 
     user.setReminders(List.of(reminder1));
 
-    user.setCategories(Arrays.asList(categoryPayment, categoryTest));
+    user.setCategories(Arrays.asList(categoryPayment, categoryTest, categoryDeposit));
 
     User user2 = new User("Pascal1",
         "Bourgoin1",
